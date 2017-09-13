@@ -1,0 +1,17 @@
+{
+  "name": "@aliir/how-to-npm-workshop",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Ali Irani",
+  "license": "ISC",
+  "description": "hello",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "github.com/aliir74/Learning"
+  }
+}
