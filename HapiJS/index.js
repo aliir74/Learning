@@ -1,10 +1,11 @@
 'use strict';
 
 const Hapi = require('hapi')
+const db = require('./database').db
 
 const server = new Hapi.Server()
 
-server.connection({port: 3000, host: 'localhost'})
+server.connection({port: 3001, host: 'localhost'})
 
 server.route({
     method: 'GET',
@@ -22,9 +23,9 @@ server.route({
     }
 })
 
-server.start((err) => {
+server.start( (err) => {
     if (err) {
         throw err
     }
-    console.log(`Server running at: ${server.info.uri}`);
+    console.log(`Server running at: ${server.info.uri}`)
 })
