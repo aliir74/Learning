@@ -8,7 +8,7 @@ const server = new Hapi.Server()
 
 const home = function (request, reply) {
 
-    reply('<html><head><title>Login page</title></head><body><h3>Welcome ' +
+    reply('<html><head><title>Login home page</title></head><body><h3>Welcome ' +
         request.auth.credentials.name +
         '!</h3><br/><form method="get" action="/logout">' +
         '<input type="submit" value="Logout">' +
@@ -29,18 +29,24 @@ Wolf.find(function (err, users) {
         let account = null;
 
         if (request.method === 'post') {
+            console.log('hello-post-method')
+            console.log(request.payload)
+            // const payload = JSON.parse(request.payload)
+            var payload = request.payload
+            if(!payload.username) {
+                payload = JSON.parse(request.payload)
+            }
 
-            if (!request.payload.username ||
-                !request.payload.password) {
+            if (!payload.username ||
+                !payload.password) {
 
                 message = 'Missing username or password';
             }
             else {
                 account = users.find(function(e) {
-                    return request.payload.username === e.name
+                    return payload.username === e.name
                 });
-                console.log(account)
-                console.log(users)
+                console.log('account: ' + account)
                 if (!account) {
 
                     message = 'Invalid username or password';
@@ -50,8 +56,8 @@ Wolf.find(function (err, users) {
 
         if (request.method === 'get' ||
             message) {
-
-            return reply('<html><head><title>Login page</title></head><body>' +
+            console.log('message ' + message)
+            return reply('<html><head><title>Login get page</title></head><body>' +
                 (message ? '<h3>' + message + '</h3><br/>' : '') +
                 '<form method="post" action="/login">' +
                 'Username: <input type="text" name="username"><br>' +
@@ -68,7 +74,7 @@ Wolf.find(function (err, users) {
 
             request.cookieAuth.set({ sid: sid });
         return reply.redirect('/');
-    });
+        });
     };
 
     const logout = function (request, reply) {
@@ -103,11 +109,11 @@ Wolf.find(function (err, users) {
                     }
 
                     if (!cached) {
-                    return callback(null, false);
-                }
-
-                return callback(null, true, cached.account);
-            });
+                        return callback(null, false);
+                    }
+                    console.log(cached.account)
+                    return callback(null, true, cached.account);
+                });
             }
         });
 
