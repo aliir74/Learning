@@ -49,7 +49,7 @@ Wolf.find(function (err, users) {
                     console.log(user)
                     request.cookieAuth.set({username: user.name});
 
-                    reply('Wohoo, great to see you')
+                    reply('Wohoo, great to see you: ')
                 }
             }
         })

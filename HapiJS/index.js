@@ -10,7 +10,7 @@ const Wolf = require('./models/Wolf')
 
 const server = new Hapi.Server()
 
-server.connection({port: 8000, host: 'localhost'})
+server.connection({port: 8000, routes: {cors: true}})
 
 const validate = function (req, username, password, callback) {
     Wolf.find({name: username}, function (err, user) {
@@ -43,10 +43,13 @@ server.register(Basic, (err) => {
         config: {
             auth: 'simple',
             handler: function (request, reply) {
-                reply('hello, ' + request.auth.credentials.username);
+                reply('hello')
+                //reply('hello, ' + request.auth.credentials.username);
+                //reply({request.auth.credentials.username})
             }
         }
     });
+
 
     server.start( (err) => {
         if (err) {
